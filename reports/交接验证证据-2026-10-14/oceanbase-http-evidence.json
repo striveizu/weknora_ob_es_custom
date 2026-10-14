@@ -1,0 +1,96 @@
+{
+  "knowledge_base_id": "0d25993a-4704-4687-a55a-6b048f5c8198",
+  "checks": [
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/knowledge-bases",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/folders",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages/entity/oceanbase-poc",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages/entity/oceanbase-poc",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages/entity/oceanbase-poc",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/revisions/entity/oceanbase-poc",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages?query=OCEANBASE",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/folders",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/index",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/graph",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/stats",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/search?q=OceanBase",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/lint",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages",
+      "status": 201
+    },
+    {
+      "method": "DELETE",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages/concept/recreate",
+      "status": 204
+    },
+    {
+      "method": "POST",
+      "path": "/knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages",
+      "status": 201
+    }
+  ],
+  "automatic_ingest_tested": false
+}

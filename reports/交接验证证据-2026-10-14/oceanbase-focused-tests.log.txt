@@ -1,0 +1,6 @@
+ok      github.com/Tencent/WeKnora/internal/application/repository  0.891s
+ok      github.com/Tencent/WeKnora/internal/database    0.529s
+ok      github.com/Tencent/WeKnora/internal/types   0.466s
+ok      github.com/Tencent/WeKnora/internal/container   2.007s
+ok      github.com/Tencent/WeKnora/internal/application/repository/retriever/elasticsearch/v8   0.656s [no tests to run]
+ok      github.com/Tencent/WeKnora/internal/application/service 1.208s

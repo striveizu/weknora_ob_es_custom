@@ -1,0 +1,76 @@
+--- FAIL: TestUpdateMCPService_AppliesNonScalarUpdateWithoutName (0.01s)
+                            MCP service URL failed SSRF validation: SSRF validation failed: hostname example.com resolves to restricted IP 198.18.0.18: restricted range 198.18.0.0/15
+--- FAIL: TestQueryTemplatesEnsuresMissingWeKnoraTemplate (0.01s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestQueryTemplatesEnsuresMissingDesktopTemplate (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestQueryTemplatesEnsureDesktopFailureKeepsCatalog (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestQueryTemplatesReplaceDesktopFailureIsFatal (0.00s)
+--- FAIL: TestQueryTemplatesCollapsesConcurrentProvisioning (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestQueryTemplatesProvisionsPerClusterIndependently (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestQueryTemplatesReprovisionsOverFailedStandardTemplate (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestQueryTemplatesReportsFailedStandardTemplateWithoutEnsure (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestQueryTemplatesSurfacesFailedEnsureWithoutProvisioning (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestQueryTemplatesReplaceStandardPersistsNewTemplateID (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestQueryTemplatesReplaceStandardKeepsOldTemplateWhileReplacementBuilds (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestQueryTemplatesReplaceStandardKeepsOldTemplateWhenPersistFails (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestUpdateRefusesTemplateChangeWhenSkillSnapshotExists (0.00s)
+--- FAIL: TestUpdateRefusesDesktopEnabledChangeWhenSkillSnapshotExists (0.00s)
+--- FAIL: TestUpdateRefusesIdentityChangeWhenSkillSnapshotExists (0.00s)
+--- FAIL: TestUpdateRefusesIdentityChangeWhileSkillIsInstalling (0.00s)
+--- FAIL: TestQueryTemplatesEnsureAndReplaceDoNotShareSingleflight (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestUpdateRefusesPrivateEndpointChangeWhenSkillSnapshotExists (0.00s)
+--- FAIL: TestQueryTemplatesDeduplicatesSameProviderTemplateID (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestQueryTemplatesResolvesMaskedStoredCredential (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestUpdateRefusesIdentityChangeWhileSandboxesLive (0.00s)
+--- FAIL: TestUpdateIdentityChangeCordonsThenWrites (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestUpdateNonIdentityEditSkipsCordon (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestUpdateKeepsSkillImageWhenEditorOmitsIt (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestUpdateRefusalCarriesInventory (0.00s)
+--- FAIL: TestUpdateSweepsSandboxCreatedDuringCordonWindow (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestUpdateClearsCordonWhenRequestContextCancelled (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestDeleteRefusesWhileSandboxesLive (0.00s)
+WARNING[2026-10-14 01:38:04.947] [] tenant_sandbox_config.go:1199[Delete] | [sandbox] force-deleting config cfg-a without verifying its sandboxes: sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+WARNING[2026-10-14 01:38:04.949] [] tenant_sandbox_config.go:1199[Delete] | [sandbox] force-deleting config cfg-a without verifying its sandboxes: sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestDeleteForceStillRefusesVerifiedLiveSandboxes (0.00s)
+WARNING[2026-10-14 01:38:04.951] [] tenant_sandbox_config.go:1070[Inventory] | [sandbox] inventory of config cfg-a is unverifiable: sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestUpdateProceedsWhenInventoryUnverifiable (0.00s)
+                            sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestDeleteSoftDeletesWhenEmpty (0.00s)
+                            cannot verify whether the sandbox config still owns sandboxes: sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestDeleteReleasesSkillSnapshotsBeforeSoftDelete (0.00s)
+                            cannot verify whether the sandbox config still owns sandboxes: sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestDeleteReclaimsArchivePinnedOnlyByThisConfig (0.00s)
+                            cannot verify whether the sandbox config still owns sandboxes: sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestDeleteKeepsArchiveAnotherConfigStillPins (0.00s)
+                            cannot verify whether the sandbox config still owns sandboxes: sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestDeleteKeepsPinnedArchiveWhenReadersCannotBeListed (0.00s)
+                            cannot verify whether the sandbox config still owns sandboxes: sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestDeleteRefusesWhenSnapshotReleaseFailsWithoutForce (0.00s)
+WARNING[2026-10-14 01:38:04.971] [] tenant_sandbox_config.go:1199[Delete] | [sandbox] force-deleting config cfg-a without verifying its sandboxes: sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+WARNING[2026-10-14 01:38:04.972] [] tenant_sandbox_config.go:1387[snapshotClientFor] | [sandbox] cannot build snapshot client for config cfg-a: sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestDeleteWithForceProceedsAndRecordsThePartialSuccess (0.00s)
+--- FAIL: TestDeleteReleasesAnAbandonedBuildByPlannedName (0.00s)
+                            cannot verify whether the sandbox config still owns sandboxes: sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20
+--- FAIL: TestDeleteAcceptsAnAbandonedBuildThatNeverCommitted (0.00s)
+                            cannot verify whether the sandbox config still owns sandboxes: sandbox: unsafe outbound URL: host "api.e2b.app" resolves to 198.18.0.20

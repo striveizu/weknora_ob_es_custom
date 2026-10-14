@@ -1,0 +1,17 @@
+=== RUN   TestOceanBaseWikiIntegration
+    oceanbase_integration_test.go:45: Database version: 5.7.25-OceanBase_CE-v4.4.2.1
+=== RUN   TestOceanBaseWikiIntegration/UserDefaultsAndDatabaseAssignedSequences
+=== RUN   TestOceanBaseWikiIntegration/JSONSourcesLongTextAndSearch
+=== RUN   TestOceanBaseWikiIntegration/ConcurrentVersionSnapshotAndDeleteRecreate
+=== RUN   TestOceanBaseWikiIntegration/GroupedClaimsLateSiblingAndFailureCounters
+=== RUN   TestOceanBaseWikiIntegration/GuardedSeedAndDrain
+=== RUN   TestOceanBaseWikiIntegration/FolderDeleteRecreateAndMigrationGuards
+--- PASS: TestOceanBaseWikiIntegration (21.33s)
+    --- PASS: TestOceanBaseWikiIntegration/UserDefaultsAndDatabaseAssignedSequences (0.18s)
+    --- PASS: TestOceanBaseWikiIntegration/JSONSourcesLongTextAndSearch (0.19s)
+    --- PASS: TestOceanBaseWikiIntegration/ConcurrentVersionSnapshotAndDeleteRecreate (0.12s)
+    --- PASS: TestOceanBaseWikiIntegration/GroupedClaimsLateSiblingAndFailureCounters (0.19s)
+    --- PASS: TestOceanBaseWikiIntegration/GuardedSeedAndDrain (0.16s)
+    --- PASS: TestOceanBaseWikiIntegration/FolderDeleteRecreateAndMigrationGuards (0.11s)
+PASS
+ok      github.com/Tencent/WeKnora/internal/application/repository  21.984s

@@ -1,0 +1,1860 @@
+{
+  "analysis_date": "2026-10-13",
+  "timezone": "Asia/Shanghai",
+  "repo_url": "https://github.com/Tencent/WeKnora",
+  "repo_commit": "94fae6de43a36e44d64aecbbdf19c0b72b352aa8",
+  "repo_path_relative_to_report": "..",
+  "target": {
+    "oceanbase": "4.4.2",
+    "compatibility_mode": "MySQL (assumed, not user-confirmed)",
+    "edition": null,
+    "patch": null,
+    "es_server_version": null
+  },
+  "validation_status": "Static source analysis and official-document review only; no OB/ES integration test executed.",
+  "findings": [
+    {
+      "id": "startup_driver",
+      "path": "internal/container/container.go",
+      "line": 798,
+      "note": "DB_DRIVER accepts only postgres/sqlite; additional dialect allowlist also needs modification.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "migration_dispatch",
+      "path": "internal/database/migration.go",
+      "line": 101,
+      "note": "Only SQLite changes the default PG migration directory.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "mysql_unwired",
+      "path": "migrations/mysql/README.md",
+      "line": 1,
+      "note": "MySQL init is not wired and covers only 10 core tables.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_json_length",
+      "path": "internal/application/repository/wiki_page.go",
+      "line": 43,
+      "note": "Non-SQLite branch assumes jsonb_array_length.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_snapshot_cas",
+      "path": "internal/application/repository/wiki_page.go",
+      "line": 116,
+      "note": "Snapshot and versioned update are one transaction.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_list_fulltext",
+      "path": "internal/application/repository/wiki_page.go",
+      "line": 355,
+      "note": "PG fulltext and aliases cast are used for query filter.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_source_lookup",
+      "path": "internal/application/repository/wiki_page.go",
+      "line": 500,
+      "note": "PG JSONB containment and legacy reference string form.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_source_slugs",
+      "path": "internal/application/repository/wiki_page.go",
+      "line": 546,
+      "note": "Same PG predicate projected to slugs.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_folder_delete",
+      "path": "internal/application/repository/wiki_page.go",
+      "line": 730,
+      "note": "Atomic NOT EXISTS delete; self-reference behavior and concurrency require OB validation.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_similarity",
+      "path": "internal/application/repository/wiki_page.go",
+      "line": 1049,
+      "note": "PG trigram similarity and percent operator.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_normalization",
+      "path": "internal/application/repository/wiki_page.go",
+      "line": 1090,
+      "note": "Non-SQLite path assumes PG regexp_replace signature.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_regex",
+      "path": "internal/application/repository/wiki_page.go",
+      "line": 1358,
+      "note": "Non-SQLite returns PG regex operator.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "task_guarded_enqueue",
+      "path": "internal/application/repository/task_queue.go",
+      "line": 63,
+      "note": "KB SHARE lock gated on postgres.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "task_seed_atomic",
+      "path": "internal/application/repository/task_queue.go",
+      "line": 131,
+      "note": "Finalizing counter and pending op in same transaction.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "task_claim",
+      "path": "internal/application/repository/task_queue.go",
+      "line": 260,
+      "note": "Postgres uses grouped anchors with locks; fallback assumes SQLite single writer.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "task_drain",
+      "path": "internal/application/repository/task_queue.go",
+      "line": 406,
+      "note": "Raw DELETE RETURNING needs mysql-equivalent transaction.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "task_failure_count",
+      "path": "internal/application/repository/task_queue.go",
+      "line": 455,
+      "note": "Raw UPDATE RETURNING needs mysql-equivalent transaction.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_slug_lock",
+      "path": "internal/application/service/wiki_ingest.go",
+      "line": 1009,
+      "note": "Redis lock errors can fail open; DB CAS remains necessary.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_claim_stale",
+      "path": "internal/application/service/wiki_ingest.go",
+      "line": 58,
+      "note": "Current threshold 90 minutes.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_recovery",
+      "path": "internal/container/recover_pending_wiki_tasks.go",
+      "line": 1,
+      "note": "Boot recovery for durable pending wiki tasks.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "vector_delete_guard",
+      "path": "internal/application/service/vectorstore.go",
+      "line": 253,
+      "note": "Several row lock safeguards gated on postgres.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "storage_delete_guard",
+      "path": "internal/application/service/storagebackend.go",
+      "line": 130,
+      "note": "Row locking gated on postgres.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "model_binding_json",
+      "path": "internal/application/repository/model_usage.go",
+      "line": 60,
+      "note": "Non-PG uses SQLite JSON extraction comparison.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "chunk_seq_id",
+      "path": "internal/application/repository/chunk.go",
+      "line": 55,
+      "note": "SQLite allocation is special; OB sequence/autoincrement and batch fill need validation.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "chunk_image_projection",
+      "path": "internal/application/repository/chunk_image_assets.go",
+      "line": 17,
+      "note": "DB-maintained chunk_images projection has dialect-specific expressions.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "es_mapping",
+      "path": "internal/application/repository/retriever/elasticsearch/v8/repository.go",
+      "line": 394,
+      "note": "Creates index without explicit field mapping.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "es_save_id",
+      "path": "internal/application/repository/retriever/elasticsearch/v8/repository.go",
+      "line": 158,
+      "note": "Index call has no stable business document ID.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "es_bulk",
+      "path": "internal/application/repository/retriever/elasticsearch/v8/repository.go",
+      "line": 186,
+      "note": "CreateOp uses no stable ID; per-item error inspection already exists.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "es_filters",
+      "path": "internal/application/repository/retriever/elasticsearch/v8/repository.go",
+      "line": 343,
+      "note": "KB/document/tag and disabled-chunk scope; no independent tenant filter here.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "es_vector_script",
+      "path": "internal/application/repository/retriever/elasticsearch/v8/repository.go",
+      "line": 465,
+      "note": "Exact filtered scoring clamps cosine to nonnegative; not HNSW query.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "es_vector_doc",
+      "path": "internal/application/repository/retriever/elasticsearch/structs.go",
+      "line": 11,
+      "note": "Current document fields do not include tenant_id.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "memory_vector_fallback",
+      "path": "internal/application/repository/memory_vector.go",
+      "line": 70,
+      "note": "Non-PG memory vector ranking can run in Go; not routed automatically to ES.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "embedding_requirement",
+      "path": "internal/types/knowledgebase.go",
+      "line": 897,
+      "note": "Check IndexingStrategy.NeedsEmbedding for Wiki-only vs keyword/vector paths.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "string_array_scan",
+      "path": "internal/types/session.go",
+      "line": 301,
+      "note": "Scan only accepts []byte; validate actual OB driver return type.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_schema",
+      "path": "migrations/versioned/000037_wiki_and_indexing.up.sql",
+      "line": 15,
+      "note": "JSONB, large text, partial unique indexes, folders and indexing strategy.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    },
+    {
+      "id": "wiki_revision_schema",
+      "path": "migrations/versioned/000075_wiki_page_revisions.up.sql",
+      "line": 26,
+      "note": "Immutable prior snapshots and (page_id,version) uniqueness.",
+      "evidence_kind": "local_source_static",
+      "verified_on_oceanbase": false
+    }
+  ],
+  "migration_inventory": {
+    "postgres_up_file_count": 119,
+    "postgres_latest_up": "000118_mcp_oauth_timestamp_tz.up.sql",
+    "sqlite_up_file_count": 37,
+    "sqlite_latest_up": "000036_messages_attachment_lookup.up.sql",
+    "counts_are_files_not_active_tables": true
+  },
+  "scan": {
+    "patterns": {
+      "postgres_json_and_casts": "jsonb_|::(?:jsonb|JSONB|text|varchar|boolean|integer)|@>",
+      "postgres_search": "ILIKE|to_tsvector|plainto_tsquery|similarity\\(|~\\*|gin_trgm",
+      "returning": "\\bRETURNING\\b",
+      "dialect_branches": "Dialector\\.Name\\(\\)|\\.Name\\(\\)\\s*(?:==|!=)\\s*\"(?:postgres|sqlite|mysql)\"|case \"(?:postgres|sqlite|mysql)\"",
+      "sqlite_fallback": "json_each|json_array_length|json_extract|CAST\\([^\\n]+ AS TEXT\\)|strftime",
+      "postgres_types": "type:jsonb|type:bytea|type:text\\[\\]"
+    },
+    "entries": [
+      {
+        "path": "internal/application/repository/attachment_descriptions.go",
+        "line": 126,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "cast := \"CAST(metadata AS TEXT)\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/attachment_descriptions.go",
+        "line": 127,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if r.db.Name() == \"mysql\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 75,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if tx.Name() == \"sqlite\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 237,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "isPostgres := db.Dialector.Name() == \"postgres\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 243,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "db = db.Where(\"metadata->>'standard_question' ILIKE ? ESCAPE ?\", like, likeEscapeChar)",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 252,
+        "categories": [
+          "postgres_json_and_casts",
+          "postgres_search"
+        ],
+        "text": "db = db.Where(\"(metadata->'similar_questions')::text ILIKE ? ESCAPE ?\", like, likeEscapeChar)",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 260,
+        "categories": [
+          "postgres_json_and_casts",
+          "postgres_search"
+        ],
+        "text": "db = db.Where(\"(metadata->'answers')::text ILIKE ? ESCAPE ?\", like, likeEscapeChar)",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 267,
+        "categories": [
+          "postgres_json_and_casts",
+          "postgres_search"
+        ],
+        "text": "db = db.Where(\"(content ILIKE ? ESCAPE ? OR metadata::text ILIKE ? ESCAPE ?)\",",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 510,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if tx.Name() == \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 530,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "rows = append(rows, \"(?::varchar, ?::text, ?::boolean, ?::varchar, ?::integer, ?::integer)\")",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 867,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "case \"mysql\":",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 880,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "case \"postgres\":",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 883,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "\"SELECT 1 FROM jsonb_array_elements_text(\"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 884,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "\"COALESCE(metadata->'similar_questions', '[]'::jsonb)) elem \"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 889,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"(json_extract(metadata, '$.standard_question') IN ? OR EXISTS (\"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 890,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"SELECT 1 FROM json_each(\"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 891,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"CASE WHEN json_extract(metadata, '$.similar_questions') IS NOT NULL \"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 892,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"THEN json_extract(metadata, '$.similar_questions') ELSE '[]' END) \"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 1014,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if r.db.Dialector.Name() == \"sqlite\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 1316,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if r.db.Dialector.Name() == \"mysql\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 1362,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if r.db.Dialector.Name() == \"mysql\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 1368,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "case \"postgres\":",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 1370,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "Where(\"metadata IS NOT NULL AND metadata::text != '{}' AND jsonb_array_length(COALESCE(metadata->'generated_questions', '[]'::jsonb)) > 0\").",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 1376,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "case \"mysql\":",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk.go",
+        "line": 1386,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "Where(\"metadata IS NOT NULL AND json_array_length(json_extract(metadata, '$.generated_questions')) > 0\").",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk_image_assets.go",
+        "line": 29,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "d := imageAssetDialect{postgres: r.db.Name() == \"postgres\"}",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk_image_assets.go",
+        "line": 123,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "// ILIKE with the default backslash escape, the form the",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/repository/chunk_image_assets.go",
+        "line": 125,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "matches = append(matches, expr+\" ILIKE ?\")",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk_image_assets.go",
+        "line": 221,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"ELSE CAST(json_extract(i.attrs, \" + path + \") AS TEXT) END)\", true",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/chunk_image_assets.go",
+        "line": 227,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "return \"i.attrs::text\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/knowledge.go",
+        "line": 669,
+        "categories": [
+          "returning"
+        ],
+        "text": "// promote UPDATE) because GORM does not expose a portable RETURNING",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/repository/mcp_metadata.go",
+        "line": 32,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if db.Name() == \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/mcp_metadata.go",
+        "line": 33,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "return \"jsonb_array_length(tools)\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/mcp_metadata.go",
+        "line": 35,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "return \"json_array_length(tools)\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/memory_vector.go",
+        "line": 31,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if r.db == nil || r.db.Dialector == nil || r.db.Dialector.Name() != \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/message.go",
+        "line": 368,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "// ILIKE is Postgres-only; SQLite (Lite build) and MySQL lack the keyword,",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/repository/message.go",
+        "line": 373,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if r.db.Name() == \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/message.go",
+        "line": 374,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "contentLikeExpr = \"messages.content ILIKE ? ESCAPE ?\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 61,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if db.Dialector.Name() == \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 74,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"json_extract(image_processing_config, '$.model_id') = ? OR \"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 75,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"json_extract(vlm_config, '$.model_id') = ? OR \"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 76,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"json_extract(asr_config, '$.model_id') = ? OR \"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 77,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"json_extract(wiki_config, '$.synthesis_model_id') = ? OR \"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 78,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"json_extract(auto_tag_config, '$.model_id') = ?\",",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 86,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if db.Dialector.Name() == \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 96,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"json_extract(config, '$.model_id') = ? OR \"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 97,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"json_extract(config, '$.rerank_model_id') = ? OR \"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 98,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"json_extract(config, '$.vlm_model_id') = ? OR \"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 99,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"json_extract(config, '$.asr_model_id') = ? OR \"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 100,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"json_extract(config, '$.query_understand_model_id') = ? OR \"+",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 101,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "\"json_extract(config, '$.question_suggestions.follow_ups.model_id') = ?\",",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 107,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if db.Dialector.Name() == \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/model_usage.go",
+        "line": 110,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "return db.Where(\"json_extract(config, '$.sandbox_config_id') = ?\", configID)",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/organization.go",
+        "line": 96,
+        "categories": [
+          "postgres_json_and_casts",
+          "postgres_search"
+        ],
+        "text": "q = q.Where(\"name ILIKE ? OR description ILIKE ? OR id::text ILIKE ?\", pattern, pattern, pattern)",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/organization.go",
+        "line": 130,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if memberLimit > 0 && tx.Name() != \"sqlite\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/retriever/sqlite/repository.go",
+        "line": 286,
+        "categories": [
+          "returning"
+        ],
+        "text": "// skipped rows also shifted the RETURNING ids GORM assigns back to the slice,",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/repository/session.go",
+        "line": 166,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "isPostgres := r.db.Dialector.Name() == \"postgres\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/session.go",
+        "line": 169,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "titleLikeExpr = \"s.title ILIKE ? ESCAPE ?\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/session.go",
+        "line": 484,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if db.Name() == \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/session.go",
+        "line": 487,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "return \"json_extract(fork_bootstrap, '$.\" + key + \"')\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/task_queue.go",
+        "line": 79,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if dialector.Name() == \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/task_queue.go",
+        "line": 155,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if tx.Dialector.Name() == \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/task_queue.go",
+        "line": 284,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if tx.Dialector.Name() == \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/task_queue.go",
+        "line": 423,
+        "categories": [
+          "returning"
+        ],
+        "text": "RETURNING dedup_key`,",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/task_queue.go",
+        "line": 449,
+        "categories": [
+          "returning"
+        ],
+        "text": "// new value. We use UPDATE ... RETURNING so the read+write happens in",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/repository/task_queue.go",
+        "line": 458,
+        "categories": [
+          "returning"
+        ],
+        "text": "`UPDATE task_pending_ops SET fail_count = fail_count + 1 WHERE id = ? RETURNING fail_count`,",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/temporary_document.go",
+        "line": 86,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if r.db.Name() == \"sqlite\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/temporary_document.go",
+        "line": 93,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "Select(\"CAST(s.tenant_id AS TEXT) || ':' || json_extract(a.value, '$.id')\").",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/temporary_document.go",
+        "line": 95,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "Joins(\"JOIN json_each(CAST(m.attachments AS TEXT)) a\").",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/temporary_document.go",
+        "line": 97,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "Where(\"json_extract(a.value, '$.id') IS NOT NULL\")",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/temporary_document.go",
+        "line": 98,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "return query.Where(\"(CAST(temporary_documents.tenant_id AS TEXT) || ':' || temporary_documents.id) NOT IN (?)\",",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/temporary_document.go",
+        "line": 103,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "containsAttachment := \"m.attachments @> jsonb_build_array(jsonb_build_object('id', temporary_documents.id))\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/temporary_document.go",
+        "line": 105,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "case \"mysql\":",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/user.go",
+        "line": 205,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if tx.Name() == \"sqlite\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/user.go",
+        "line": 218,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "case \"postgres\", \"mysql\":",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/user.go",
+        "line": 347,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "Where(\"username ILIKE ? OR email ILIKE ?\", searchPattern, searchPattern).",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 44,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if r.db != nil && r.db.Dialector != nil && r.db.Dialector.Name() == \"sqlite\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 45,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "return \"CASE WHEN COALESCE(json_array_length(category_path), 0) > 0 THEN 0 ELSE 1 END ASC\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 47,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "return \"CASE WHEN COALESCE(jsonb_array_length(category_path), 0) > 0 THEN 0 ELSE 1 END ASC\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 87,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if r.db != nil && r.db.Dialector != nil && r.db.Dialector.Name() == \"sqlite\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 88,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "return \"(in_links IS NULL OR json_array_length(in_links) = 0)\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 90,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "return \"(in_links IS NULL OR in_links = '[]'::JSONB)\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 368,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "// Use PostgreSQL full-text search + ILIKE for aliases",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 370,
+        "categories": [
+          "postgres_json_and_casts",
+          "postgres_search"
+        ],
+        "text": "\"(to_tsvector('simple', coalesce(title, '') || ' ' || coalesce(content, '')) @@ plainto_tsquery('simple', ?) OR aliases::text ILIKE ?)\",",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 392,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "case \"postgres\":",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 393,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "query = query.Where(\"category_path::jsonb = ?::jsonb\", string(encoded))",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 394,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "case \"sqlite\":",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 398,
+        "categories": [
+          "sqlite_fallback"
+        ],
+        "text": "query = query.Where(\"CAST(category_path AS TEXT) = ?\", string(encoded))",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 526,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "Where(\"knowledge_base_id = ? AND (source_refs @> ?::jsonb OR source_refs::text LIKE ?)\",",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 543,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "// Backed by idx_wiki_pages_source_refs (GIN jsonb_path_ops) for the",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 564,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "Where(\"knowledge_base_id = ? AND (source_refs @> ?::jsonb OR source_refs::text LIKE ?)\",",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 865,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "clauses = append(clauses, \"source_refs @> ?::jsonb\")",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 876,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "clauses = append(clauses, \"source_refs::text LIKE ?\")",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 1041,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "// gin_trgm_ops, migration 000041). Used by the dedup pre-filter to",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 1074,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "Select(\"slug, title, page_type, status, aliases, out_links, similarity(lower(title), ?) AS sim\", q).",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 1091,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if db != nil && db.Dialector != nil && db.Dialector.Name() == \"sqlite\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 1306,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "// escapeLikePattern escapes LIKE / ILIKE metacharacters so the returned string",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 1315,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "// PostgreSQL interprets the query as a case-insensitive POSIX regex (~*);",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 1359,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "// SQLite / Lite (desktop single-binary) has no POSIX ~*; LIKE matches",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 1360,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "// a literal substring. Postgres production keeps ~*.",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 1364,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "return \"~*\", false",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/repository/wiki_page.go",
+        "line": 1370,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "// Postgres uses POSIX ~*.",
+        "comment_only": true
+      },
+      {
+        "path": "internal/application/service/storagebackend.go",
+        "line": 134,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if tx.Dialector.Name() == \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/service/storagebackend.go",
+        "line": 180,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if tx.Dialector.Name() == \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/service/vectorstore.go",
+        "line": 254,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "return db != nil && db.Dialector != nil && db.Dialector.Name() == \"postgres\"",
+        "comment_only": false
+      },
+      {
+        "path": "internal/application/service/wiki_ingest.go",
+        "line": 2131,
+        "categories": [
+          "postgres_json_and_casts"
+        ],
+        "text": "// Backed by idx_wiki_pages_source_refs (GIN jsonb_path_ops, migration",
+        "comment_only": true
+      },
+      {
+        "path": "internal/container/container.go",
+        "line": 803,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "case \"postgres\":",
+        "comment_only": false
+      },
+      {
+        "path": "internal/container/container.go",
+        "line": 846,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "case \"sqlite\":",
+        "comment_only": false
+      },
+      {
+        "path": "internal/container/container.go",
+        "line": 875,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "// vector_stores delete guard) compares Dialector.Name() to \"postgres\" /",
+        "comment_only": true
+      },
+      {
+        "path": "internal/container/container.go",
+        "line": 880,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if name := db.Dialector.Name(); name != \"postgres\" && name != \"sqlite\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/container/container.go",
+        "line": 1100,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if db.Dialector.Name() != \"postgres\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/audit_log.go",
+        "line": 231,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Details       JSON         `json:\"details\"        gorm:\"type:jsonb;default:'{}'\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/datasource.go",
+        "line": 84,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Config JSON `json:\"config\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/datasource.go",
+        "line": 105,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "LastSyncCursor JSON `json:\"last_sync_cursor\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/datasource.go",
+        "line": 108,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "LastSyncResult JSON `json:\"last_sync_result\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/datasource.go",
+        "line": 187,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Result JSON `json:\"result\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/embed_channel.go",
+        "line": 20,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "AllowedOrigins         JSON           `json:\"allowed_origins\"     gorm:\"type:jsonb;not null;default:'[]'\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/knowledge_span.go",
+        "line": 92,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Input        JSONMap    `gorm:\"column:input;type:jsonb\"          json:\"input,omitempty\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/knowledge_span.go",
+        "line": 93,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Output       JSONMap    `gorm:\"column:output;type:jsonb\"         json:\"output,omitempty\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/knowledge_span.go",
+        "line": 94,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Metadata     JSONMap    `gorm:\"column:metadata;type:jsonb\"       json:\"metadata,omitempty\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/knowledgebase.go",
+        "line": 91,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "StorageProviderConfig *StorageProviderConfig `yaml:\"storage_provider_config\" json:\"storage_provider_config\"  gorm:\"column:storage_provider_config;type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/mcp_endpoint.go",
+        "line": 36,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "KnowledgeBaseIDs StringArray `json:\"knowledge_base_ids\" gorm:\"type:jsonb;not null;default:'[]'\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/mcp_endpoint.go",
+        "line": 40,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Tools StringArray `json:\"tools\" gorm:\"type:jsonb;not null;default:'[]'\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/mcp_metadata.go",
+        "line": 33,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Tools             []*MCPTool `json:\"tools\"              gorm:\"serializer:json;type:jsonb;not null\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/memory.go",
+        "line": 213,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "ExtractionState MemoryExtractionState `json:\"-\" gorm:\"column:extraction_state;type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/memory.go",
+        "line": 216,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "PendingSessions MemoryPendingSessions `json:\"pending_sessions\" gorm:\"column:pending_sessions;type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/memory.go",
+        "line": 718,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Aliases    MemoryTopicAliases `json:\"aliases\" gorm:\"type:jsonb;column:aliases\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/memory.go",
+        "line": 1382,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Vector    []byte    `json:\"-\"          gorm:\"type:bytea\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/message.go",
+        "line": 489,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "AgentSteps AgentSteps `json:\"agent_steps,omitempty\" gorm:\"type:jsonb;column:agent_steps\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/message.go",
+        "line": 492,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "MentionedItems MentionedItems `json:\"mentioned_items,omitempty\" gorm:\"type:jsonb;column:mentioned_items\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/message.go",
+        "line": 494,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Images MessageImages `json:\"images,omitempty\" gorm:\"type:jsonb;column:images\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/message.go",
+        "line": 496,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Attachments MessageAttachments `json:\"attachments,omitempty\" gorm:\"type:jsonb;column:attachments\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/message.go",
+        "line": 514,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Usage *TokenUsage `json:\"usage,omitempty\" gorm:\"type:jsonb;column:usage\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/message.go",
+        "line": 532,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "ExecutionContext MessageExecutionContext `json:\"-\" gorm:\"type:jsonb;column:execution_context\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/message.go",
+        "line": 540,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "UsedMemories UsedMemories `json:\"used_memories,omitempty\" gorm:\"type:jsonb;column:used_memories\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/message.go",
+        "line": 546,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "SandboxCheckpoint *SandboxCheckpoint `json:\"sandbox_checkpoint,omitempty\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/message.go",
+        "line": 551,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "ContextCheckpoint *ContextCheckpoint `json:\"-\" gorm:\"type:jsonb;column:context_checkpoint\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/message_suggestion.go",
+        "line": 84,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Questions          SuggestionItems `json:\"questions\" gorm:\"type:jsonb;not null\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/model_catalog_config.go",
+        "line": 11,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Overlay   JSON      `gorm:\"type:jsonb\" json:\"overlay\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/model_catalog_config.go",
+        "line": 12,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "History   JSON      `gorm:\"type:jsonb\" json:\"-\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/session.go",
+        "line": 101,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "LastRequestState *SessionLastRequestState `json:\"last_request_state,omitempty\" gorm:\"column:agent_config;type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/session.go",
+        "line": 147,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "ForkBootstrap *ForkBootstrap `json:\"-\" gorm:\"type:jsonb;column:fork_bootstrap\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/session.go",
+        "line": 163,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "// AgentConfig       *SessionAgentConfig `json:\"agent_config\"       gorm:\"type:jsonb\"` // Agent 配置（会话级别，仅存储enabled和knowledge_bases）",
+        "comment_only": true
+      },
+      {
+        "path": "internal/types/session.go",
+        "line": 164,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "// ContextConfig     *ContextConfig      `json:\"context_config\"     gorm:\"type:jsonb\"` // 上下文管理配置（可选）",
+        "comment_only": true
+      },
+      {
+        "path": "internal/types/session.go",
+        "line": 264,
+        "categories": [
+          "postgres_search"
+        ],
+        "text": "// Keyword matches title ILIKE '%keyword%'.",
+        "comment_only": true
+      },
+      {
+        "path": "internal/types/system_setting.go",
+        "line": 28,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Value JSON   `gorm:\"type:jsonb;not null\"                    json:\"value\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tag.go",
+        "line": 38,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "if tx.Dialector.Name() != \"sqlite\" {",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/task_dead_letter.go",
+        "line": 48,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Payload json.RawMessage `json:\"payload\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/task_pending_op.go",
+        "line": 45,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Payload json.RawMessage `json:\"payload\" gorm:\"type:jsonb;default:'{}'\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/temporary_document.go",
+        "line": 39,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Chunks            JSON           `json:\"-\" gorm:\"type:jsonb;not null;default:'[]'\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/temporary_document.go",
+        "line": 40,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "ImageRefs         JSON           `json:\"image_refs,omitempty\" gorm:\"type:jsonb;not null;default:'[]'\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/temporary_document.go",
+        "line": 41,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Metadata          JSON           `json:\"metadata,omitempty\" gorm:\"type:jsonb;not null;default:'{}'\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/temporary_document.go",
+        "line": 42,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "ProcessingOptions JSON           `json:\"-\" gorm:\"type:jsonb;not null;default:'{}'\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant.go",
+        "line": 104,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "ContextConfig *ContextConfig `yaml:\"context_config\"      json:\"context_config\"      gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant.go",
+        "line": 106,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "WebSearchConfig *WebSearchConfig `yaml:\"web_search_config\"   json:\"web_search_config\"   gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant.go",
+        "line": 108,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "ParserEngineConfig *ParserEngineConfig `yaml:\"parser_engine_config\" json:\"parser_engine_config\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant.go",
+        "line": 110,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Credentials *CredentialsConfig `yaml:\"credentials\" json:\"credentials\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant.go",
+        "line": 112,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "StorageEngineConfig *StorageEngineConfig `yaml:\"storage_engine_config\" json:\"storage_engine_config\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant.go",
+        "line": 116,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "ChatHistoryConfig *ChatHistoryConfig `yaml:\"chat_history_config\" json:\"chat_history_config\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant.go",
+        "line": 118,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "RetrievalConfig *RetrievalConfig `yaml:\"retrieval_config\" json:\"retrieval_config\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant.go",
+        "line": 120,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "MemoryConfig *MemoryConfig `yaml:\"memory_config\" json:\"memory_config\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant.go",
+        "line": 122,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "APIPrincipalConfig *APIPrincipalConfig `yaml:\"api_principal_config\" json:\"-\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant_api_key.go",
+        "line": 26,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "KnowledgeBaseIDs StringArray     `json:\"knowledge_base_ids\" gorm:\"type:jsonb;not null;default:'[]'\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant_api_key.go",
+        "line": 32,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Capabilities StringArray `json:\"capabilities\" gorm:\"type:jsonb;not null;default:'[]'\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant_sandbox_config_entity.go",
+        "line": 48,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Config *TenantSandboxConfig `gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant_skill.go",
+        "line": 92,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Envs SkillEnvVars `json:\"envs,omitempty\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/tenant_skill.go",
+        "line": 101,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Served *SkillServedVersion `json:\"served,omitempty\" gorm:\"type:jsonb\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/user.go",
+        "line": 131,
+        "categories": [
+          "postgres_types"
+        ],
+        "text": "Preferences UserPreferences `json:\"preferences\" gorm:\"type:jsonb;not null;default:'{}'\"`",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/vectorstore.go",
+        "line": 837,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "case \"postgres\":",
+        "comment_only": false
+      },
+      {
+        "path": "internal/types/vectorstore.go",
+        "line": 846,
+        "categories": [
+          "dialect_branches"
+        ],
+        "text": "case \"sqlite\":",
+        "comment_only": false
+      }
+    ],
+    "note": "Includes comments. Not exhaustive; matches are review clues, not independently proven runtime blockers. PG/SQLite retriever implementations are expected to contain dialect-specific code."
+  }
+}

@@ -1,0 +1,19 @@
+POST /auth/login 200
+POST /knowledge-bases 201
+POST /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/folders 201
+POST /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages 201
+GET /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages/entity/oceanbase-poc 200
+PUT /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages/entity/oceanbase-poc 200
+PUT /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages/entity/oceanbase-poc 409
+GET /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/revisions/entity/oceanbase-poc 200
+GET /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages?query=OCEANBASE 200
+GET /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/folders 200
+GET /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/index 200
+GET /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/graph 200
+GET /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/stats 200
+GET /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/search?q=OceanBase 200
+GET /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/lint 200
+POST /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages 201
+DELETE /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages/concept/recreate 204
+POST /knowledgebase/0d25993a-4704-4687-a55a-6b048f5c8198/wiki/pages 201
+Wiki HTTP smoke passed. Review KB: 0d25993a-4704-4687-a55a-6b048f5c8198
